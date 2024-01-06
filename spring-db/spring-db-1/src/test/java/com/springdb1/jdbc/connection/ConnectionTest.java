@@ -62,7 +62,7 @@ public class ConnectionTest {
         Connection con8 = dataSource.getConnection();
         Connection con9 = dataSource.getConnection();
         Connection con10 = dataSource.getConnection();
-        Connection con11 = dataSource.getConnection();
+        //Connection con11 = dataSource.getConnection();
         log.info("connection={}, class={}", con1, con1.getClass());
         log.info("connection={}, class={}", con2, con2.getClass());
     }
