@@ -1,6 +1,7 @@
 package com.springdb1.jdbc.service;
 
 import com.springdb1.jdbc.domain.Member;
+import com.springdb1.jdbc.repository.MemberRepositoryV1;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
