@@ -23,14 +23,23 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // H2 데이터베이스에 접속하기 위한 클라이언트. 스프링 부트가 기본으로 잡아준 것이다.
+    // H2 데이터베이스에 접속하기 위한 '클라이언트'. 스프링 부트가 기본으로 잡아준 것이다.
     runtimeOnly 'com.h2database:h2'
     // External Libraries에 가면 이 스프링 부트 버전과 맞는 버전이 무엇인지 체크할 수 있다.
     // 예를 들어, Gradle: com.h2database:h2:2.2.224 로 돼있으므로 2.2.224 버전이 필요하단 걸 알 수 있다.
+    // 이렇게 클라이언트와 서버의 버전을 서로 맞춰줘야 한다.
+
+    //테스트에서 lombok 사용
+    // ★ 이 설정을 추가해야 테스트 코드에서 @Slf4j 같은 롬복 애노테이션을 사용할 수 있다.
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
