@@ -8,24 +8,25 @@ package com.springdb1.jdbc.service;
 import com.springdb1.jdbc.domain.Member;
 import com.springdb1.jdbc.repository.MemberRepositoryV1;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.SQLException;
 
 @RequiredArgsConstructor
 public class MemberServiceV1 {
 
-    private final MemberRepositoryV1 memberRepositoryV1;
+    private final MemberRepositoryV1 memberRepository;
 
     // 계좌이체
     public void accountTransfer(String fromId, String toId, int money) throws SQLException {
         // 계좌이체된 멤버를 조회한 후
-        Member fromMember = memberRepositoryV1.findById(fromId);
-        Member toMember = memberRepositoryV1.findById(toId);
+        Member fromMember = memberRepository.findById(fromId);
+        Member toMember = memberRepository.findById(toId);
 
         // 금액만큼을 더하고 뺀다.
-        memberRepositoryV1.update(fromId, fromMember.getMoney() - money); // 이체한 사람
+        memberRepository.update(fromId, fromMember.getMoney() - money); // 이체한 사람
         validation(toMember); // 일부러 예외 발생 시키기 위한 메서드
-        memberRepositoryV1.update(toId, fromMember.getMoney() + money); // 이체 받은 사람
+        memberRepository.update(toId, fromMember.getMoney() + money); // 이체 받은 사람
     }
 
     private void validation(Member toMember){
