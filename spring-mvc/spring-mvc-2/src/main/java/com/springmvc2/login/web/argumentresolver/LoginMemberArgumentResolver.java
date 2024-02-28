@@ -29,8 +29,11 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         log.info("supportsParameter 실행");
 
         boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
-        boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
+        boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType()); // getParameterType 하면 Member 클래스를 얻게 된다.
 
+        // 1. @Login 어노테이션을 갖고 있으며
+        // 2. Member 타입일 때
+        // 즉, 2개 조건을 모두 만족할 때 아래의 resolveArgument 를 실행하게 된다. (HandlerMethodArgumentResolver 인터페이스에 나와있는 설명을 읽어보자)
         return hasLoginAnnotation && hasMemberType;
     }
 
@@ -41,10 +44,10 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         HttpSession session = request.getSession(false);
         if (session == null) {
-            return null; // 1. 세션이 null이면 Model 객체에 null을 넣겠다는 의미
+            return null; // 1. 세션이 null이면 Member 객체에 null을 넣겠다는 의미
         }
 
-        return session.getAttribute(SessionConst.LOGIN_MEMBER); // 2. 세션이 null이 아니면 Model 객체에 로그인한 멤버 정보를 넣겠다는 의미
+        return session.getAttribute(SessionConst.LOGIN_MEMBER); // 2. 세션이 null이 아니면 Member 객체에 로그인한 멤버 정보를 넣겠다는 의미
     }
 
     // 이렇게 한다고 해서 끝난게 아니다.
