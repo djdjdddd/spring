@@ -18,13 +18,13 @@ public class WebServerCustomizer implements WebServerFactoryCustomizer<Configura
     @Override
     public void customize(ConfigurableJettyWebServerFactory factory) {
         // 404 에러가 발생하면 path 에 해당하는 컨트롤러 실행
-        ErrorPage errorPage404 = new ErrorPage(HttpStatus.NOT_FOUND, "error-page/404");
+        ErrorPage errorPage404 = new ErrorPage(HttpStatus.NOT_FOUND, "/error-page/404");
 
         // 500 에러가 발생하면 path 에 해당하는 컨트롤러 실행
-        ErrorPage errorPage500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "error-page/500");
+        ErrorPage errorPage500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error-page/500");
 
         // RuntimeException 이 발생하면 path 에 해당하는 컨트롤러 실행
-        ErrorPage errorPageEx = new ErrorPage(RuntimeException.class, "error-page/500"); // RuntimeException 뿐만 아니라 자식 Exception 까지 처리한다고 함.
+        ErrorPage errorPageEx = new ErrorPage(RuntimeException.class, "/error-page/500"); // RuntimeException 뿐만 아니라 자식 Exception 까지 처리한다고 함.
 
         // ErrorPage 등록
         factory.addErrorPages(errorPage404, errorPage500, errorPageEx);
