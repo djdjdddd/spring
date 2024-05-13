@@ -1,21 +1,17 @@
-package com.springmvc2.exception.api;
+package com.springmvc2.exception.handler.advice;
 
 import com.springmvc2.exception.handler.ErrorResult;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
-@RestController
-public class ApiExceptionV2Controller {
+@RestControllerAdvice
+public class ExControllerAdvice {
 
-	/**
-	 * @ControllerAdvice 에 의해 @ExceptionHandler 로직 부분이 Controller에서 따로 분리될 수 있다.
-	 * @see com.springmvc2.exception.handler.advice.ExControllerAdvice
-	 */
 	// 현재 컨트롤러에서 IAE가 발생할 경우 해당 예외를 잡아 처리한다.
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)	// 따로 HTTP 상태코드를 정의했다. 왜냐하면 예외를 처리함에 따라 정상(코드 200) 흐름이 되기 때문이다.
@@ -36,24 +32,6 @@ public class ApiExceptionV2Controller {
 	@ExceptionHandler
 	public ErrorResult exHandle(Exception e){
 		return new ErrorResult("ex", "내부 서버 오류");
-	}
-
-	@GetMapping("/api2/members/{id}")
-	public MemberDto getMember(@PathVariable("id") String id) {
-		if (id.equals("run")) {
-			throw new RuntimeException("잘못된 사용자");			//
-		}
-		if (id.equals("iae")) {
-			throw new IllegalArgumentException("잘못된 입력 값");	// IAE가 발생함에 따라 @ExceptionHandler(IllegalArgumentException.class) 로직이 수행된다.
-		}
-		return new MemberDto(id, "hello " + id);
-	}
-
-	@Data
-	@AllArgsConstructor
-	static class MemberDto {
-		private String memberId;
-		private String name;
 	}
 
 }
